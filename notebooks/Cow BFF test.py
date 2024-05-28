@@ -9,7 +9,7 @@
 import pytest
 import sys
 
-# Skip writing pyc files on a readonly filesystem.
+# Skip writing pyc files in case it is on a readonly filesystem.
 sys.dont_write_bytecode = True
 
 # Run pytest.
