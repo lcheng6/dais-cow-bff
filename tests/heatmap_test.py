@@ -3,14 +3,16 @@ from pyspark.sql.types import StructType, StructField, StringType, IntegerType, 
 from pandas.testing import assert_frame_equal
 import pytest
 import datetime
-try:
-    spark
-except NameError:
-    from databricks.sdk.runtime import *
 
 @pytest.fixture(scope="session")
 def spark_session():
     global spark
+    try:
+        spark
+    except NameError:
+        from databricks.connect import DatabricksSession
+        spark = DatabricksSession.builder.getOrCreate()
+
     yield spark
 
 
