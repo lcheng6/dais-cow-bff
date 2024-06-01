@@ -1,42 +1,15 @@
 resources:
   jobs:
-    cow_bff:
-      name: Cow BFF
+    daily_report:
+      name: "[${bundle.target} - ${workspace.current_user.userName}] Cow BFF report"
       job_clusters:
-        - job_cluster_key: Job_cluster
+        - job_cluster_key: cow_cluster
           new_cluster:
-            data_security_mode: SINGLE_USER
-            spark_conf:
-              "spark.master": "local[*, 4]"
-              "spark.databricks.cluster.profile": "singleNode"
-            custom_tags:
-              "ResourceClass": "SingleNode"
-            aws_attributes:
-              spot_bid_price_percent: 100
-              availability: SPOT_WITH_FALLBACK
-              zone_id: us-west-2a
-              first_on_demand: 1
-            enable_elastic_disk: true
-            runtime_engine: PHOTON
-            node_type_id: r6id.xlarge
-            spark_env_vars:
-              PYSPARK_PYTHON: /databricks/python3/bin/python3
-            spark_version: 15.2.x-scala2.12
+            spark_version: 14.3.x-scala2.12
+            num_workers: 1
+            node_type_id: Standard_DS3_v2
       tasks:
-        - task_key: Cow_BFF
-          job_cluster_key: Job_cluster
-          notification_settings: {}
+        - task_key: cow_report
+          job_cluster_key: cow_cluster
           notebook_task:
-            notebook_path: ../notebooks/Cow BFF.ipynb
-            source: WORKSPACE
-          run_if: ALL_SUCCESS
-          webhook_notifications: {}
-          email_notifications: {}
-      email_notifications:
-        no_alert_for_skipped_runs: true
-      webhook_notifications: {}
-      max_concurrent_runs: 1
-      schedule:
-        pause_status: PAUSED
-        quartz_cron_expression: 46 58 21 * * ?
-        timezone_id: America/Los_Angeles
+            notebook_path: "../notebooks/Cow BFF.ipynb"

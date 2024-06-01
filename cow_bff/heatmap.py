@@ -2,13 +2,9 @@ from pyspark.sql.functions import udf, countDistinct, sum, col
 from pyspark.sql.types import IntegerType
 from pyspark.sql.dataframe import DataFrame
 
-def calculate_time_overlap(start_interval_1, end_interval_1, start_interval_2, end_interval_2):
-  if end_interval_1 <= start_interval_2 or end_interval_2 <= start_interval_1:
-    return 0 
-  else:
-    start_overlap = max(start_interval_1, start_interval_2)
-    end_overlap = min(end_interval_1, end_interval_2)
-    return end_overlap - start_overlap
+calculate_time_overlap = lambda start_interval_1, end_interval_1, start_interval_2, end_interval_2: \
+    0 if end_interval_1 <= start_interval_2 or end_interval_2 <= start_interval_1 else \
+    min(end_interval_1, end_interval_2) - max(start_interval_1, start_interval_2) 
 
 calculate_time_overlap_udf = udf(calculate_time_overlap, IntegerType())
 
@@ -19,6 +15,7 @@ def compute_heatmap(cows_bff: DataFrame):
         .withColumnRenamed('meal_end','meal_end1')\
         .withColumnRenamed('date','date1')\
         .select('cow1','meal_start1','meal_end1','date1')
+
 
     cow2 = cows_bff\
         .withColumnRenamed('cow_name','cow2')\
@@ -36,12 +33,21 @@ def compute_heatmap(cows_bff: DataFrame):
 
     df = df.groupBy('cow1', 'cow2').agg(sum('overlap').alias('total_overlap'), countDistinct('date1').alias('distinct_days'))
     df = df\
-        .withColumn('avg_overlap', col('total_overlap') / col('distinct_days'))\
+        .withColumn('avg_overlap', df.total_overlap / df.distinct_days)\
         .select('cow1','cow2','avg_overlap')\
         .withColumnRenamed('avg_overlap','distance')\
         .sort(col('cow1').asc(), col('cow2').asc())
 
     return df
+
+# make it so that we can also run the module using DBConnect
+if __name__ == "__main__":
+    from databricks.connect import DatabricksSession
+    spark = DatabricksSession.builder.getOrCreate()
+
+    cows_bff = spark.read.table("db.cows_bff")
+    df = compute_heatmap(cows_bff)
+    df.show()
 
 # start_interval_1, end_interval_1 = 0, 20 
 # start_interval_2, end_interval_2 = 10, 30 
