@@ -49,6 +49,4 @@ if __name__ == "__main__":
     df = compute_heatmap(cows_bff)
     df.show()
 
-# start_interval_1, end_interval_1 = 0, 20 
-# start_interval_2, end_interval_2 = 10, 30 
-# calculate_time_overlap(start_interval_1, end_interval_1, start_interval_2, end_interval_2)
+

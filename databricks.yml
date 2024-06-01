@@ -8,12 +8,12 @@ targets:
   development:
     default: true
     workspace:
-      host: https://adb-1966697730403610.10.azuredatabricks.net/
+      host: https://adb-1966697730403610.10.azuredatabricks.net/ # update to your own workspace
 
 
   qa:
     workspace:
-      host: https://adb-1966697730403610.10.azuredatabricks.net/ # can be different
+      host: https://adb-1966697730403610.10.azuredatabricks.net/ # can be different from dev
     resources:
       jobs:
         daily_report:
@@ -21,7 +21,7 @@ targets:
 
   production:
     workspace:
-      host: https://adb-1966697730403610.10.azuredatabricks.net/ # can be different
+      host: https://adb-1966697730403610.10.azuredatabricks.net/ # can be different from dev and qa
     resources:
       jobs:
         daily_report:
