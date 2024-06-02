@@ -1,4 +1,0 @@
-ipykernel
-pytest
-plotly
-nbformat
