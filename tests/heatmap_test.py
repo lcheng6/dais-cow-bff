@@ -49,7 +49,7 @@ def test_compute_heatmap(spark_session, cow_bff):
     schema = StructType([ \
         StructField("cow1", StringType(),True), \
         StructField("cow2", StringType(),True), \
-        StructField("distance", DoubleType(),True)
+        StructField("closeness", DoubleType(),True)
     ])
     expected = spark_session.createDataFrame([
         ("cow1", "cow2", 0.5),
