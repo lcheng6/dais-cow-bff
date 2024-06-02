@@ -35,7 +35,7 @@ def compute_heatmap(cows_bff: DataFrame):
     df = df\
         .withColumn('avg_overlap', df.total_overlap / df.distinct_days)\
         .select('cow1','cow2','avg_overlap')\
-        .withColumnRenamed('avg_overlap','distance')\
+        .withColumnRenamed('avg_overlap','closeness')\
         .sort(col('cow1').asc(), col('cow2').asc())
 
     return df
