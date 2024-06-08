@@ -7,9 +7,7 @@ include:
 targets:
   development:
     default: true
-    workspace:
-      host: https://adb-1966697730403610.10.azuredatabricks.net/ # update to your own workspace
-
+    mode: development
 
   qa:
     workspace:
