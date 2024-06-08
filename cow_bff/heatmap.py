@@ -4,7 +4,7 @@ from pyspark.sql.dataframe import DataFrame
 
 calculate_time_overlap = lambda start_interval_1, end_interval_1, start_interval_2, end_interval_2: \
     0 if end_interval_1 <= start_interval_2 or end_interval_2 <= start_interval_1 else \
-    max(end_interval_1, end_interval_2) - min(start_interval_1, start_interval_2) 
+    min(end_interval_1, end_interval_2) - max(start_interval_1, start_interval_2) 
 
 calculate_time_overlap_udf = udf(calculate_time_overlap, IntegerType())
 
@@ -40,6 +40,6 @@ def compute_heatmap(cows_bff: DataFrame):
 
     return df
 
-# start_interval_1, end_interval_1 = 0, 20 
-# start_interval_2, end_interval_2 = 10, 30 
-# overlap = calculate_time_overlap(start_interval_1, end_interval_1, start_interval_2, end_interval_2) # overlap should be 10
+start_interval_1, end_interval_1 = 0, 20 
+start_interval_2, end_interval_2 = 10, 30 
+overlap = calculate_time_overlap(start_interval_1, end_interval_1, start_interval_2, end_interval_2) # overlap should be 10
