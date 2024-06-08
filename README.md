@@ -1,26 +1,9 @@
 # Cow BBF Project
 
-## Setup Virtual Environment
+This is a sample data engineering project that tries to answer the question if cow best friends also take their meals together. 
 
-Configure Python virtual environment
+![Youtube](images/heatmap.png)
 
-```sh
-python3.10 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+This project has been used for the "[Path to Production: Databricks Project CICD FOR Seamless Inner to Outer Dev Loops](https://www.databricks.com/dataaisummit/session/path-production-databricks-project-cicd-seamless-inner-outer-dev-loops)" talk at DATA+AI Summit 2024 and the "[Bridging the Production Gap: Develop and Deploy Code Easily With IDEs](https://www.databricks.com/dataaisummit/session/bridging-production-gap-develop-and-deploy-code-easily-ides/)" talk at DATA+AI Summit 2023.
 
-
-## Setup VS Code
-
-Run command "Prefernced: Open User Settings (JSON)" and add the following block:
-
-```
-  "jupyter.runStartupCommands": [ 
-    "%load_ext autoreload\n%autoreload 2",
-    "global spark\ntry:\n  spark\nexcept NameError:\n  from databricks.connect import DatabricksSession\n  spark = DatabricksSession.builder.getOrCreate()",
-    "from pyspark.sql.connect.dataframe import DataFrame\ndef df_html(df):\n  return df.toPandas().to_html()\nhtml_formatter = get_ipython().display_formatter.formatters['text/html']\nhtml_formatter.for_type(DataFrame, df_html)",
-    "from databricks.sdk.runtime import *",
-    "import sys; sys.path.append('${workspaceFolder}')"
-  ],
-```
+For the demo at DAIS 2024, use the `dais24-main` branch for the complete code and the `dais24-stageX` branches for snapshots. For the demo at DAIS 2023, see the `main` branch for the complete code and the `stageX` branches for snapshots 
