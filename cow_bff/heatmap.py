@@ -40,6 +40,6 @@ def compute_heatmap(cows_bff: DataFrame):
 
     return df
 
-start_interval_1, end_interval_1 = 0, 20 
-start_interval_2, end_interval_2 = 10, 30 
-overlap = calculate_time_overlap(start_interval_1, end_interval_1, start_interval_2, end_interval_2) # overlap should be 10
+# start_interval_1, end_interval_1 = 0, 20 
+# start_interval_2, end_interval_2 = 10, 30 
+# overlap = calculate_time_overlap(start_interval_1, end_interval_1, start_interval_2, end_interval_2) # overlap should be 10
