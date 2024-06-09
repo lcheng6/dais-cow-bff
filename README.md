@@ -1,5 +1,7 @@
 # Cow BBF Project
 
+Demo'ing live!
+
 This is a sample data engineering project that tries to answer the question if cow best friends also take their meals together. 
 
 ![Youtube](images/heatmap.png)
